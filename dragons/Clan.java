@@ -1,35 +1,47 @@
 package dragons;
 
-import java.util.ArrayList;
+
+import java.util.Hashtable;
 
 public class Clan {
     private String name;
     private String[] colors;
     private Matriarch matriarch;
-    private ArrayList<Dragon> dragons;
-    private ArrayList<Drake> drakes;
+    private Hashtable<String, Dragon> dragons;
+    private Hashtable<String, Drake> drakes;
+    private Hashtable<String, Choir> choirs;
+    
 
     public Clan(Matriarch m) {
         matriarch = m;
         name = matriarch.getName();
         colors = m.colors();
-        dragons = new ArrayList<>();
-        drakes = new ArrayList<>();
+        dragons = new Hashtable<>();
+        drakes = new Hashtable<>();
+        choirs = new Hashtable<>();
     }
 
     public void addFirstDaughter(Dragon d) {
         matriarch.addDaughter(d);
-        dragons.add(d);
+        dragons.put(d.getName(), d);
     }
 
     public void addFirstDaughter(String name) {
         addFirstDaughter(new Dragon(name, colors, matriarch));
     }
 
+    public void addFirstChoir(Voice voice) {
+        matriarch.addChoir(voice);
+    }
+
+    public void addFirstChoir(Choir c) {
+        matriarch.addChoir(c);
+    }
+
 
     public void addSister(Dragon d) {
         matriarch.addSister(d);
-        dragons.add(d);
+        dragons.put(d.getName(), d);
     }
 
     public void addSister(String name) {
@@ -40,12 +52,12 @@ public class Clan {
 
     public void addConsort(Drake c) {
         matriarch.addconsort(c);
-        drakes.add(c);
+        drakes.put(c.getName(), c);
     }
 
     public void addFirstSon(Drake s) {
         matriarch.addSon(s);
-        drakes.add(s);
+        drakes.put(s.getName(), s);
     }
 
     public void addFirstSon(String name) {
@@ -53,47 +65,43 @@ public class Clan {
     }
 
     public void addDaughter(String mother, Dragon d) {
-        for (Dragon dragon : dragons) {
-            if (dragon.getName().equals(mother)) {
-                dragon.addDaughter(d);
-                dragons.add(d);
-                break;
-            }
-        }
+        dragons.put(d.getName(), d);
+        dragons.get(mother).addDaughter(d);
     }
 
     public void addSon(String mother, Drake s) {
-        for (Dragon dragon : dragons) {
-            if (dragon.getName().equals(mother)) {
-                dragon.addSon(s);
-                drakes.add(s);
-                break;
-            }
-        }
+        drakes.put(s.getName(), s);
+        dragons.get(mother).addSon(s);
     }
 
     public void mate(String wife, Drake m) {
-        for (Dragon dragon : dragons) {
-            if (dragon.getName().equals(wife)) {
-                dragon.setMate(m);
-                if (!drakes.contains(m)) {
-                    drakes.add(m);
-                }
-                break;
-            }
+        if (!drakes.contains(m)) {
+            drakes.put(m.getName(), m);
         }
+        dragons.get(wife).setMate(m);
     }
 
     public void mate(String mate, Dragon d) {
-        for (Drake drake :drakes) {
-            if (drake.getName().equals(mate)) {
-                drake.setMate(d);
-                if (!dragons.contains(d)) {
-                    dragons.add(d);
-                }
-                break;
-            }
+        if (!dragons.contains(d)) {
+            dragons.put(d.getName(), d);
         }
+        drakes.get(mate).setMate(d);
+    }
+
+    public void addChoir(String patron, Voice voice) {
+        dragons.get(patron).addChoir(voice);
+    }
+
+    public void addChoir(String patron, Choir choir) {
+        dragons.get(patron).addChoir(choir);
+    }
+
+    public Choir getFirstChoir() {
+        return matriarch.getChoir();
+    }
+
+    public Choir getChoir(String patron) {
+        return dragons.get(patron).getChoir();
     }
 
     @Override

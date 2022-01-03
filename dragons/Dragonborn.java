@@ -2,39 +2,48 @@ package dragons;
 
 import java.util.ArrayList;
 
-public class Dragon extends Wyrm {
-    private Dragon mother;
+public class Dragonborn extends Wyrm {
+    private Dragon patron;
+    private Dragonborn mother;
     private Matriarch matriarch;
-    private Choir choir;
-    private ArrayList<Dragon> daughters;
-    public ArrayList<Drake> sons;
-    
-    public Dragon(String name, String[] colors) {
+    private Voice voice;
+    private ArrayList<Dragonborn> daughters;
+    private ArrayList<Drakeborn> sons;
+
+    public Dragonborn(String name, String[] colors) {
         super(name, colors);
         daughters = new ArrayList<>();
         sons = new ArrayList<>();
-        choir = null;
     }
 
-    public Dragon(String name, String[] colors, Dragon mother) {
+    public Dragonborn(String name, String[] colors, Dragonborn mother) {
         super(name, colors);
         setMother(mother);
         daughters = new ArrayList<>();
         sons = new ArrayList<>();
-        choir = null;
+    }
+
+    public void setPatron(Dragon p) {
+        patron = p;
     }
 
     public void setMatriarch(Matriarch m) {
         matriarch = m;
     }
 
-    public void setMother(Dragon d) {
+    public void setVoice(Voice v) {
+        voice = v;
+    }
+
+    public void setMother(Dragonborn d) {
         mother = d;
-        if (mother.getMatriarch() == null) {
-            setMatriarch((Matriarch) d);
+        if (mother.getVoice() == null) {
+            setVoice((Voice) d);
         } else {
-            setMatriarch(d.getMatriarch());
+            setVoice(d.getVoice());
         }
+        patron = mother.getPatron();
+        matriarch = mother.getMatriarch();
     }
 
     public void setMate(Drake m) {
@@ -45,42 +54,37 @@ public class Dragon extends Wyrm {
         return (Wyrm) super.getMate();
     }
 
-    public void addDaughter(Dragon d) {
+    public void addDaughter(Dragonborn d) {
         daughters.add(d);
         d.setMother(this);
     }
 
-    public void addSon(Drake d) {
+    public void addSon(Drakeborn d) {
         sons.add(d);
     }
 
-    public void addChoir(Voice voice) {
-        Choir c = new Choir(this, voice);
-        addChoir(c);
-    }
-
-    public void addChoir(Choir c) {
-        this.choir = c;
-    }
-
-    public Choir getChoir() {
-        return choir;
-    }
-
-    public ArrayList<Dragon> getDaughters() {
+    public ArrayList<Dragonborn> getDaughters() {
         return daughters;
     }
 
-    public ArrayList<Drake> getSons() {
+    public ArrayList<Drakeborn> getSons() {
         return sons;
+    }
+
+    public Dragon getPatron() {
+        return patron;
     }
 
     public Matriarch getMatriarch() {
         return matriarch;
     }
 
-    public Dragon getMother() {
+    public Dragonborn getMother() {
         return mother;
+    }
+
+    public Voice getVoice() {
+        return voice;
     }
 
     @Override
@@ -101,9 +105,7 @@ public class Dragon extends Wyrm {
                     result += daughters.get(i).toString() + ", ";
                 }
             }
-        }
-        if (choir != null ) {
-            result += choir.toString();
+            result += "} ";
         } else {
             result += "} ";
         }
@@ -111,4 +113,6 @@ public class Dragon extends Wyrm {
     }
 
     
-}
+    }
+
+

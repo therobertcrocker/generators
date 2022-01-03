@@ -2,29 +2,29 @@ package dragons;
 
 import java.util.ArrayList;
 
-public class Matriarch extends Dragon {
-    private ArrayList<Dragon> sisters;
-    private ArrayList<Drake> consorts;
+public class Voice  extends Dragonborn {
+    private ArrayList<Dragonborn> sisters;
+    private ArrayList<Drakeborn> consorts;
 
-    public Matriarch(String name, String[] colors) {
+    public Voice(String name, String[] colors) {
         super(name, colors);
         sisters = new ArrayList<>();
         consorts = new ArrayList<>();
     }
 
-    public void addSister(Dragon d) {
+    public void addSister(Dragonborn d) {
         sisters.add(d);
     }
 
-    public ArrayList<Dragon> getSisters() {
+    public ArrayList<Dragonborn> getSisters() {
         return sisters;
     }
 
-    public void addconsort(Drake d) {
+    public void addconsort(Drakeborn d) {
         consorts.add(d);
     }
 
-    public ArrayList<Drake> getConsorts() {
+    public ArrayList<Drakeborn> getConsorts() {
         return consorts;
     }
 
@@ -54,10 +54,6 @@ public class Matriarch extends Dragon {
                 }
             }
             result += "} ";
-        }
-        if (getChoir() != null ) {
-            result += ",";
-            result += getChoir().toString();
         }
         if (sisters.size() > 0) {
             result += ", \"sisters\": [ ";

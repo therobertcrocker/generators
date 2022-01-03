@@ -3,6 +3,8 @@ package dragons;
 public class Wyrm {
     private String name;
     private String[] colors;
+    private Wyrm mate;
+    
 
     public Wyrm(String n, String[] c) {
         name = n;
@@ -25,6 +27,14 @@ public class Wyrm {
 
     public String[] colors() {
         return colors;
+    }
+
+    public void setMate(Wyrm d) {
+        mate = d;
+    }
+
+    public Wyrm getMate() {
+        return mate;
     }
 
     @Override

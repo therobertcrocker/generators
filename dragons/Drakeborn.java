@@ -1,41 +1,54 @@
 package dragons;
- 
-public class Drake extends Wyrm{
-    private Matriarch matriarch;
-    private Dragon mother;
 
-    public Drake(String name, String[] colors) {
+import java.util.ArrayList;
+
+public class Drakeborn extends Wyrm{
+    private Dragon patron;
+    private Dragonborn mother;
+    private Matriarch matriarch;
+    private Voice voice;
+
+    public Drakeborn(String name, String[] colors) {
         super(name, colors);
     }
 
-    public Drake(String name, String[] colors, Dragon mother) {
+    public Drakeborn(String name, String[] colors, Dragonborn mother) {
         super(name, colors);
         setMother(mother);
+    }
+
+    public void setPatron(Dragon p) {
+        patron = p;
     }
 
     public void setMatriarch(Matriarch m) {
         matriarch = m;
     }
 
-    public void setMother(Dragon d) {
+    public void setVoice(Voice v) {
+        voice = v;
+    }
+
+    public void setMother(Dragonborn d) {
         mother = d;
-        if (mother.getMatriarch() == null) {
-            setMatriarch((Matriarch) d);
+        if (mother.getVoice() == null) {
+            setVoice((Voice) d);
         } else {
-            setMatriarch(d.getMatriarch());
+            setVoice(d.getVoice());
         }
+        patron = mother.getPatron();
+        matriarch = mother.getMatriarch();
     }
 
-    public void setMate(Dragon m) {
+    public void setMate(Dragonborn m) {
         super.setMate(m);
-        matriarch = getMate().getMatriarch();
     }
 
-    public Dragon getMate() {
-        return (Dragon) super.getMate();
+    public Wyrm getMate() {
+        return (Wyrm) super.getMate();
     }
 
-    public Dragon getMother() {
+    public Dragonborn getMother() {
         return mother;
     }
 
